@@ -12,8 +12,15 @@ namespace gestion_courrier_bo.Models
         public string Nom { get; set; }
         public string Prenom { get; set; }
         public string Email { get; set; }
-        public Poste Poste { get; set; }
-        public Departement Departement { get; set; }
+
+        [ForeignKey("Poste")]
+        public int PostId { get; set; }
+        public Poste Poste { get; set; } = default!;
+
+        [ForeignKey("Departement")]
+        public int DepartementId { get; set; }
+
+        public Departement Departement { get; set; } = default!;
         public string MotDePasse { get; set; }
     }
 }

@@ -7,6 +7,9 @@ using Microsoft.EntityFrameworkCore;
 using gestion_courrier_bo.Context;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Model;
 using System.Security.Policy;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
+using gestion_courrier_bo.Models;
 
 namespace gestion_courrier_bo.Pages.Login
 {
@@ -30,6 +33,7 @@ namespace gestion_courrier_bo.Pages.Login
 
             // Find the user by username
             var employee = await _context.Employes.FirstOrDefaultAsync(u => u.Email == email);
+            employee.Poste = _context.Postes.Find(employee.PostId);
 
             // Check if the user exists
             if (employee == null)
@@ -47,6 +51,17 @@ namespace gestion_courrier_bo.Pages.Login
 
             // Login successful, perform any necessary actions (e.g., set authentication cookie)
 
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Name, employee.Email),
+                new Claim(ClaimTypes.Role, employee.Poste.Nom),
+                // Add other role claims as needed
+            };
+
+            var claimsIdentity = new ClaimsIdentity(claims, IdentityConstants.ApplicationScheme);
+
+            await HttpContext.SignInAsync(IdentityConstants.ApplicationScheme, new ClaimsPrincipal(claimsIdentity));
+
             // Redirect to a protected page or perform any other desired action
             return RedirectToPage("/Index");
         }
@@ -56,16 +71,7 @@ namespace gestion_courrier_bo.Pages.Login
            return BCrypt.Net.BCrypt.Verify(password,passwordHash);
         }
 
-        private string HashPassword(string password)
-        {
-            // Generate a salt for the password hash
-            string salt = BCrypt.Net.BCrypt.GenerateSalt();
-
-            // Hash the password using the generated salt
-            string hashedPassword = BCrypt.Net.BCrypt.HashPassword(password, salt);
-
-            return hashedPassword;
-        }
+        
     }
 
     }
