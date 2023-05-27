@@ -17,6 +17,7 @@ namespace gestion_courrier_bo.Models
         public int PostId { get; set; }
         public Poste Poste { get; set; } = default!;
 
+
         [ForeignKey("Departement")]
         public int DepartementId { get; set; }
 

@@ -11,5 +11,7 @@ namespace gestion_courrier_bo.Models
         [Required]
         public String Nom { get; set; }
 
+        public ICollection<CourrierDestinataire> CourrierDestinataires { get; set; }
+
     }
 }
