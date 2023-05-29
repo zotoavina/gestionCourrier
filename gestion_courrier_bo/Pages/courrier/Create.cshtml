@@ -1,0 +1,68 @@
+﻿@page
+@model gestion_courrier_bo.Pages.courrier.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Courrier</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Courrier.Objet" class="control-label"></label>
+                <input asp-for="Courrier.Objet" class="form-control" />
+                <span asp-validation-for="Courrier.Objet" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Courrier.Reference" class="control-label"></label>
+                <input asp-for="Courrier.Reference" class="form-control" />
+                <span asp-validation-for="Courrier.Reference" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Courrier.Commentaire" class="control-label"></label>
+                <input asp-for="Courrier.Commentaire" class="form-control" />
+                <span asp-validation-for="Courrier.Commentaire" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Courrier.Fichier" class="control-label"></label>
+                <input asp-for="Courrier.Fichier" class="form-control" />
+                <span asp-validation-for="Courrier.Fichier" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Courrier.IdExpediteur" class="control-label">Expéditeur interne</label>
+                <select asp-for="Courrier.IdExpediteur" class ="form-control" asp-items="ViewBag.IdExpediteur"></select>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">Déstinataires</label>
+                <select multiple  name="SelectedDestinataire" class="form-control" asp-items="ViewBag.Destinataires"></select>
+            </div>            
+            <div class="form-group">
+                <label asp-for="Courrier.ExpediteurExterne" class="control-label">Expéditeur externe</label>
+                <input asp-for="Courrier.ExpediteurExterne" class="form-control" />
+                <span asp-validation-for="Courrier.ExpediteurExterne" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Courrier.IdFlag" class="control-label">Flag</label>
+                <select asp-for="Courrier.IdFlag" class ="form-control" asp-items="ViewBag.IdFlag"></select>
+            </div>
+            <input type="file" name="FileUpload" />
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -11,19 +11,19 @@ namespace gestion_courrier_bo.Models
         public string? Fichier { get; set; } 
         public DateTime DateReception { get; set; }
 
-        [ForeignKey("Departement")]
+        [ForeignKey("ExpediteurInterne")]
         public int? IdExpediteur { get; set; }
-        public Departement? ExpediteurInterne { get; set; }
+        public Departement? ExpediteurInterne { get; set; } = default!;
 
         public string? ExpediteurExterne { get; set; }
 
-        [ForeignKey("Employe")]
+        [ForeignKey("Recepteur")]
         public int IdRecepteur { get; set; }
-        public Employe Recepteur { get; set; }
+        public Employe Recepteur { get; set; } = default!;
 
         [ForeignKey("Flag")]
         public int IdFlag { get; set; }
-        public Flag Flag { get; set; }
+        public Flag Flag { get; set; } = default!;
 
         public ICollection<CourrierDestinataire> Destinataires { get; set; }
 
