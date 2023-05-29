@@ -11,7 +11,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form method="post">
+        <form method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Courrier.Objet" class="control-label"></label>
@@ -29,18 +29,13 @@
                 <span asp-validation-for="Courrier.Commentaire" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Courrier.Fichier" class="control-label"></label>
-                <input asp-for="Courrier.Fichier" class="form-control" />
-                <span asp-validation-for="Courrier.Fichier" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="Courrier.IdExpediteur" class="control-label">Expéditeur interne</label>
                 <select asp-for="Courrier.IdExpediteur" class ="form-control" asp-items="ViewBag.IdExpediteur"></select>
             </div>
 
             <div class="form-group">
                 <label class="control-label">Déstinataires</label>
-                <select multiple  name="SelectedDestinataire" class="form-control" asp-items="ViewBag.Destinataires"></select>
+                <select multiple name="SelectedDestinataires" class="form-control" asp-items="ViewBag.Destinataires"></select>
             </div>            
             <div class="form-group">
                 <label asp-for="Courrier.ExpediteurExterne" class="control-label">Expéditeur externe</label>

@@ -8,19 +8,34 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using gestion_courrier_bo.Context;
 using gestion_courrier_bo.Models;
 using gestion_courrier_bo.Services;
+using System.Security.Claims;
 
 namespace gestion_courrier_bo.Pages.courrier
 {
     public class CreateModel : PageModel
     {
         private readonly gestion_courrier_bo.Context.AppDbContext _context;
-        private readonly IFileUploadService _fileUploadService;
+        private readonly ICourrierService _courrierService;
+        private readonly IEmployeService _employeService;
+        private  List<Departement> departements { get; set; }
+
+        [BindProperty]
+        public Courrier Courrier { get; set; } = default!;
+
+        [BindProperty]
+        public IFormFile FileUpload { get; set; }
+
+        [BindProperty]
+        public List<string> SelectedDestinataires { get; set; }
 
         public CreateModel(gestion_courrier_bo.Context.AppDbContext context, 
-            IFileUploadService fileUploadService)
+            ICourrierService courrierService, 
+            IEmployeService employeService)
         {
             _context = context;
-            _fileUploadService = fileUploadService;
+            _courrierService = courrierService;
+            _employeService = employeService;
+            departements = _context.Departements.ToList();
         }
 
         public IActionResult OnGet()
@@ -32,26 +47,24 @@ namespace gestion_courrier_bo.Pages.courrier
             return Page();
         }
 
-        [BindProperty]
-        public Courrier Courrier { get; set; } = default!;
+       
         
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-
-
+            ClaimsPrincipal currentUser = User;
             //if (!ModelState.IsValid || _context.Courriers == null || Courrier == null)
             if (_context.Courriers == null || Courrier == null)
             {
                 return Page();
             }
 
-            var fileUpload = Request.Form["FileUpload"];
-
-       
-
-            _context.Courriers.Add(Courrier);
+            string email = currentUser.Identity.Name;
+            Employe connectedUser = _employeService.findEmployeByEmail(email);
+            List<Departement> SelectedDepartements =  departements
+                .Where(dept => SelectedDestinataires.Contains(dept.Id + "")).ToList();
+            _courrierService.createCourrier(Courrier, connectedUser, SelectedDepartements, FileUpload);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

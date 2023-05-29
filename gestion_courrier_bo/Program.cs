@@ -9,6 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddDbContext<AppDbContext>();
 builder.Services.AddScoped<IFileUploadService, FileUploadService>();
+builder.Services.AddScoped<ICourrierService, CourrierService>();
+builder.Services.AddScoped<IEmployeService, EmployeService>();
 
 // Add authentication services
 builder.Services.AddAuthentication(options =>

@@ -51,8 +51,7 @@ namespace gestion_courrier_bo.Pages.Login
 
             // Login successful, perform any necessary actions (e.g., set authentication cookie)
 
-            var claims = new List<Claim>
-            {
+            var claims = new List<Claim>{
                 new Claim(ClaimTypes.Name, employee.Email),
                 new Claim(ClaimTypes.Role, employee.Poste.Nom),
                 // Add other role claims as needed
