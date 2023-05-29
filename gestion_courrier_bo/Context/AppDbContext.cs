@@ -16,6 +16,17 @@ namespace gestion_courrier_bo.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //Courrier
+            modelBuilder.Entity<Courrier>()
+                .HasOne(e => e.Recepteur);
+
+            modelBuilder.Entity<Courrier>()
+               .HasOne(e => e.ExpediteurInterne);
+
+            modelBuilder.Entity<Courrier>()
+              .HasOne(e => e.Flag);
+
+
             modelBuilder.Entity<Employe>()
                 .HasOne(e => e.Poste);
 

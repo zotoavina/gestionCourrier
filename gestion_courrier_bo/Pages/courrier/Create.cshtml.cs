@@ -7,16 +7,20 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using gestion_courrier_bo.Context;
 using gestion_courrier_bo.Models;
+using gestion_courrier_bo.Services;
 
 namespace gestion_courrier_bo.Pages.courrier
 {
     public class CreateModel : PageModel
     {
         private readonly gestion_courrier_bo.Context.AppDbContext _context;
+        private readonly IFileUploadService _fileUploadService;
 
-        public CreateModel(gestion_courrier_bo.Context.AppDbContext context)
+        public CreateModel(gestion_courrier_bo.Context.AppDbContext context, 
+            IFileUploadService fileUploadService)
         {
             _context = context;
+            _fileUploadService = fileUploadService;
         }
 
         public IActionResult OnGet()

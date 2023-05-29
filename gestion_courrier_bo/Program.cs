@@ -1,4 +1,5 @@
 using gestion_courrier_bo.Context;
+using gestion_courrier_bo.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddDbContext<AppDbContext>();
+builder.Services.AddScoped<IFileUploadService, FileUploadService>();
 
 // Add authentication services
 builder.Services.AddAuthentication(options =>
