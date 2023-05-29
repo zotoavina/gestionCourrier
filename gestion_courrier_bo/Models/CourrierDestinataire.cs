@@ -14,17 +14,25 @@ namespace gestion_courrier_bo.Models
         public Departement Destinataire { get; set; }
 
         [ForeignKey("Employe")]
-        public int IdCoursier { get; set; }
-        public Employe Coursier { get; set; }
+        public int? IdCoursier { get; set; }
+        public Employe? Coursier { get; set; }
 
         [ForeignKey("Employe")]
-        public int IdRecepteur { get; set; }
-        public Employe Recepteur { get; set; }
+        public int? IdRecepteur { get; set; }
+        public Employe? Recepteur { get; set; }
 
         [ForeignKey("StatusCourrier")]
-        public int IdStatus { get; set; }
-        public StatusCourrier Status { get; set; }
-        public DateTime DateMaj { get; set; }
+        public int? IdStatus { get; set; }
+        public StatusCourrier? Status { get; set; }
+        public DateTime DateMaj { get; set; } = DateTime.Now;
+
+        public CourrierDestinataire() { }   
+
+        public CourrierDestinataire(Courrier courrier, Departement destinataire)
+        {
+            this.Courrier = courrier;
+            this.Destinataire = destinataire;
+        }
 
     }
 }
