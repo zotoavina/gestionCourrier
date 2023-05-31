@@ -17,5 +17,10 @@ namespace gestion_courrier_bo.Services
         {
             return  _context.Employes.FirstOrDefault(u => u.Email == email);
         }
+
+        public List<Employe> findEmployesByRole(string posteCode)
+        {
+            return _context.Employes.Where(e => e.Poste.code == posteCode).ToList();
+        }
     }
 }

@@ -1,0 +1,70 @@
+﻿@page
+@model gestion_courrier_bo.Pages.courrier.AssignerModel
+
+@{
+    ViewData["Title"] = "Assigner";
+}
+
+<h1>Assigner</h1>
+
+<h4>CourrierDestinataire</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="CourrierDestinataire.Id" />
+            <input type="hidden" asp-for="CourrierDestinataire.IdCourrier" />
+            <input type="hidden" asp-for="CourrierDestinataire.IdDestinataire" />
+            <input type="hidden" asp-for="CourrierDestinataire.IdStatus" />
+            <div class="form-group">
+                <label asp-for="CourrierDestinataire.Courrier.Objet" class="control-label"></label>
+                <input asp-for="CourrierDestinataire.Courrier.Objet" class="form-control" disabled />
+            </div>
+            <div class="form-group">
+                <label asp-for="CourrierDestinataire.Courrier.Reference" class="control-label">Référence</label>
+                <input asp-for="CourrierDestinataire.Courrier.Reference" class="form-control" disabled />
+            </div>
+            <div class="form-group">
+                <label asp-for="CourrierDestinataire.Courrier.Commentaire" class="control-label">Commentaire</label>
+                <input asp-for="CourrierDestinataire.Courrier.Commentaire" class="form-control" disabled />
+            </div>
+            <div class="form-group">
+                <label asp-for="CourrierDestinataire.Courrier.Fichier" class="control-label">PJ</label>
+                <input asp-for="CourrierDestinataire.Courrier.Fichier" class="form-control" disabled />
+            </div>
+            <div class="form-group">
+                <label asp-for="CourrierDestinataire.Courrier.Flag" class="control-label">Flag</label>
+                <input asp-for="CourrierDestinataire.Courrier.Flag" class="form-control" disabled />
+            </div>
+            <div class="form-group">
+                <label asp-for="CourrierDestinataire.Destinataire.Nom" class="control-label">Destinataire</label>
+                <input asp-for="CourrierDestinataire.Destinataire.Nom" class="form-control" disabled />
+            </div>
+            <div class="form-group">
+                <label asp-for="CourrierDestinataire.IdCoursier" class="control-label">Coursier</label>
+                <select asp-for="CourrierDestinataire.IdCoursier" class="form-control" asp-items="ViewBag.Coursiers"></select>
+                <span asp-validation-for="CourrierDestinataire.IdCoursier" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CourrierDestinataire.Status.Label" class="control-label">Status</label>
+                <input asp-for="CourrierDestinataire.Status.Label" class="form-control" disabled />
+            </div>
+            <div class="form-group">
+                <label asp-for="CourrierDestinataire.DateMaj" class="control-label">Date de mise à jour</label>
+                <input asp-for="CourrierDestinataire.DateMaj" class="form-control" disabled />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Assigner" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Liste">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

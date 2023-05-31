@@ -1,0 +1,117 @@
+﻿@page
+@model gestion_courrier_bo.Pages.courrier.ListeModel
+
+@{
+    ViewData["Title"] = "Liste";
+}
+
+<h1>Liste</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Courrier[0].Objet)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Courrier[0].Reference)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Courrier[0].Commentaire)
+            </th>
+            <th>
+                Pièce Jointe
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Courrier[0].DateReception)
+            </th>
+            <th>
+                Expéditeur
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Courrier[0].Recepteur)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Courrier[0].Flag)
+            </th>
+            <th>
+               Destinataire
+            </th>
+            <th>
+                Status
+            </th>
+            <th>
+                Coursier
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Courrier) {
+            @foreach (var destinataire in item.Destinataires)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Objet)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Reference)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Commentaire)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Fichier)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DateReception)
+                    </td>
+                    @if(item.ExpediteurInterne != null)
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ExpediteurInterne.Nom)
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ExpediteurExterne)
+                        </td>
+                    }
+                    
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Recepteur.Nom)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Flag.Designation)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => destinataire.Destinataire.Nom)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => destinataire.Status.Label)
+                    </td>
+                    <td>
+                        @if(destinataire.IdCoursier == null)
+                        {
+                            <a asp-page="Assigner" asp-route-courrier="@destinataire.IdCourrier" asp-route-destinataire="@destinataire.IdDestinataire"><button>Assigner</button></a>
+                        }
+                        else{
+
+                            @Html.DisplayFor(modelItem => destinataire.Coursier.Nom)
+                        }
+
+                    </td>
+                  @*  <td>
+                        <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>*@
+                </tr>
+            }
+        }
+    </tbody>
+</table>
