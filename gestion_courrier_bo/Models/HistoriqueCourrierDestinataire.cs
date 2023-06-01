@@ -9,6 +9,10 @@ namespace gestion_courrier_bo.Models
         public int IdCourrierDestinataire { get; set; }
         public CourrierDestinataire CourrierDesti { get; set; }
 
+        [ForeignKey("Employe")]
+        public int? IdRecepteur { get; set; }
+        public Employe? Recepteur { get; set; }
+
         [ForeignKey("StatusCourrier")]
         public int IdStatus { get; set; }
         public StatusCourrier StatusCourrier { get; set; }

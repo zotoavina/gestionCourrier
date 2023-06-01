@@ -11,5 +11,8 @@ namespace gestion_courrier_bo.Models
         [Required]
         public String Nom { get; set; }
 
+        [Required]  
+        public string code { get; set; }
+
     }
 }

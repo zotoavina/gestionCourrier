@@ -17,10 +17,6 @@ namespace gestion_courrier_bo.Models
         public int? IdCoursier { get; set; }
         public Employe? Coursier { get; set; }
 
-        [ForeignKey("Employe")]
-        public int? IdRecepteur { get; set; }
-        public Employe? Recepteur { get; set; }
-
         [ForeignKey("StatusCourrier")]
         public int? IdStatus { get; set; }
         public StatusCourrier? Status { get; set; }
@@ -28,10 +24,11 @@ namespace gestion_courrier_bo.Models
 
         public CourrierDestinataire() { }   
 
-        public CourrierDestinataire(Courrier courrier, Departement destinataire)
+        public CourrierDestinataire(Courrier courrier, Departement destinataire, StatusCourrier status)
         {
             this.Courrier = courrier;
             this.Destinataire = destinataire;
+            this.Status = status;
         }
 
     }

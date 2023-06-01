@@ -6,6 +6,8 @@ namespace gestion_courrier_bo.Models
     {
         public int Id { get; set; }
         [Required]
-        public String Label { get; set; }
+        public string Label { get; set; }
+        [Required]
+        public string code { get; set; }
     }
 }

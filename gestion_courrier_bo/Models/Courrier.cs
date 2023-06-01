@@ -8,8 +8,8 @@ namespace gestion_courrier_bo.Models
         public string Objet { get; set; }
         public string Reference { get; set; }
         public string? Commentaire { get; set; }
-        public string? Fichier { get; set; } 
-        public DateTime DateReception { get; set; }
+        public string? Fichier { get; set; }
+        public DateTime DateReception { get; set; } = DateTime.Now;
 
         [ForeignKey("ExpediteurInterne")]
         public int? IdExpediteur { get; set; }
