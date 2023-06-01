@@ -10,6 +10,6 @@ namespace gestion_courrier_bo.Services
 
         CourrierDestinataire assignerCoursier(int idCoursier, int idCourrierDesti);
 
-        IList<Courrier> listeCourrier(Employe employe);
+        IList<CourrierDestinataire> listeCourrier(Employe employe);
     }
 }

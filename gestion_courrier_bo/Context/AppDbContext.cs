@@ -1,4 +1,5 @@
-﻿using gestion_courrier_bo.Models;
+﻿using gestion_courrier_bo.JoinedModels;
+using gestion_courrier_bo.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace gestion_courrier_bo.Context
@@ -48,7 +49,7 @@ namespace gestion_courrier_bo.Context
                 .HasForeignKey(cd => cd.IdDestinataire)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            modelBuilder.Entity<CourrierDestinataire>()
+            modelBuilder.Entity<HistoriqueCourrierDestinataire>()
                 .HasOne(cd => cd.Recepteur)
                 .WithMany()
                 .HasForeignKey(cd => cd.IdRecepteur)
@@ -65,7 +66,8 @@ namespace gestion_courrier_bo.Context
                 .WithMany()
                 .HasForeignKey(cd => cd.IdStatus)
                 .OnDelete(DeleteBehavior.NoAction);
-        }
+
+          }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

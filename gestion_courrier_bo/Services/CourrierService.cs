@@ -9,11 +9,13 @@ namespace gestion_courrier_bo.Services
     {
         private readonly gestion_courrier_bo.Context.AppDbContext _context;
         private readonly IFileUploadService _fileUploadService;
+        private readonly IConfiguration _configuration;
 
-        public CourrierService(AppDbContext context, IFileUploadService fileUploadService)
+        public CourrierService(AppDbContext context, IFileUploadService fileUploadService, IConfiguration configuration)
         {
             _context = context;
             _fileUploadService = fileUploadService;
+            _configuration = configuration;
         }
 
         public Courrier createCourrier(Courrier courrier, Employe employe,
@@ -54,38 +56,54 @@ namespace gestion_courrier_bo.Services
             return courrierDestinataire;
         }
 
-        public IList<Courrier> listeCourrier(Employe employe)
+        public IList<CourrierDestinataire> listeCourrier(Employe employe)
         {
+            if(employe.Poste.code == _configuration["Constants:RecRole"])
+            {
+                return listeCourrierReceptionniste();
+            }
+            if(employe.Poste.code == _configuration["Constants:CouRole"])
+            {
+                return listeCourrierCoursier(employe);
+            }
+            if ((employe.Poste.code == _configuration["Constants:SecRole"]) || (employe.Poste.code == _configuration["Constants:DirRole"]))
+            {
+                return listeCourrierSecDir(employe);
+            }
             return null;
         }
 
-        private IList<Courrier> listeCourrierReceptionniste()
+        private IList<CourrierDestinataire> listeCourrierReceptionniste()
         {
-            IList<Courrier> courriers = new List<Courrier>();
-            courriers = _context.Courriers
-                 .Include(c => c.Destinataires).ThenInclude(d => d.Destinataire)
-                 .Include(c => c.Destinataires).ThenInclude(d => d.Status)
-                 .Include(c => c.ExpediteurInterne)
-                 .Include(c => c.Flag)
-                 .Include(c => c.Recepteur).ToList();
-            return courriers;
+            return ListeCourrierBaseQuery().ToList();
         }
 
-        private IList<Courrier> listeCourrierCoursier(Employe employe)
+        private IList<CourrierDestinataire> listeCourrierCoursier(Employe employe)
         {
-            IList<Courrier> courriers = new List<Courrier>();
-            courriers = _context.Courriers
-                 .Include(c => c.Destinataires).ThenInclude(d => d.Destinataire)
-                 .Include(c => c.Destinataires).ThenInclude(d => d.Status)
-                 .Include(c => c.ExpediteurInterne)
-                 .Include(c => c.Flag)
-                 .Include(c => c.Recepteur).ToList();
-            return courriers;
+            return ListeCourrierBaseQuery()
+                .Where(c => c.IdCoursier == employe.Id)
+                .ToList();
         }
 
-        private IList<Courrier> listeCourrierSecDir(Employe employe)
+        private IList<CourrierDestinataire> listeCourrierSecDir(Employe employe)
         {
-            return null;
+            return ListeCourrierBaseQuery()
+                .Where(c => c.IdDestinataire == employe.DepartementId)
+                .ToList();
+        }
+
+        private IQueryable<CourrierDestinataire> ListeCourrierBaseQuery()
+        {
+            return _context.CourrierDestinataires
+                .Include(c => c.Courrier)
+                    .ThenInclude(c => c.Flag)
+                .Include(c => c.Courrier)
+                    .ThenInclude(c => c.ExpediteurInterne)
+                .Include(c => c.Courrier)
+                    .ThenInclude(c => c.Recepteur)
+                .Include(c => c.Coursier)
+                .Include(c => c.Destinataire)
+                .Include(c => c.Status);
         }
 
 
