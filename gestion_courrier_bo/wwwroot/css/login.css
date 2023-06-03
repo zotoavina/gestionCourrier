@@ -1,0 +1,92 @@
+﻿body {
+    background-color: #f8f9fa;
+}
+
+.container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding-top: 50px;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #1b6ec2;
+}
+
+form {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+label {
+    color: #555;
+    font-weight: bold;
+}
+
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+button[type="submit"] {
+    background-color: #1b6ec2;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button[type="submit"]:hover {
+    background-color: #1861ac;
+}
+
+a {
+    color: #1b6ec2;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    background-color: #f8f9fa;
+}
+
+.footer-container {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.login-form,
+.register-form {
+    display: grid;
+    gap: 10px;
+}
+
+.form-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.form-buttons button {
+    margin-right: 10px;
+}
