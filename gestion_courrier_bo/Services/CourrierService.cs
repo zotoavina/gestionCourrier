@@ -41,7 +41,7 @@ namespace gestion_courrier_bo.Services
 
         public CourrierDestinataire assignerCoursier(int idCoursier, int idCourrierDesti)
         {
-            StatusCourrier status = _context.Status.Where(s => s.code == "ECDL").First();
+            StatusCourrier status = _context.Status.Where(s => s.code == _configuration["Constants:Status:Assigne"]).First();
             CourrierDestinataire courrierDestinataire = _context.CourrierDestinataires
                 .Include(c => c.Destinataire)
                 .Include(c => c.Status)
@@ -56,17 +56,19 @@ namespace gestion_courrier_bo.Services
             return courrierDestinataire;
         }
 
+        
+
         public IList<CourrierDestinataire> listeCourrier(Employe employe)
         {
-            if(employe.Poste.code == _configuration["Constants:RecRole"])
+            if(employe.Poste.code == _configuration["Constants:Role:RecRole"])
             {
                 return listeCourrierReceptionniste();
             }
-            if(employe.Poste.code == _configuration["Constants:CouRole"])
+            if(employe.Poste.code == _configuration["Constants:Role:CouRole"])
             {
                 return listeCourrierCoursier(employe);
             }
-            if ((employe.Poste.code == _configuration["Constants:SecRole"]) || (employe.Poste.code == _configuration["Constants:DirRole"]))
+            if ((employe.Poste.code == _configuration["Constants:Role:SecRole"]) || (employe.Poste.code == _configuration["Constants:Role:DirRole"]))
             {
                 return listeCourrierSecDir(employe);
             }
@@ -81,14 +83,17 @@ namespace gestion_courrier_bo.Services
         private IList<CourrierDestinataire> listeCourrierCoursier(Employe employe)
         {
             return ListeCourrierBaseQuery()
-                .Where(c => c.IdCoursier == employe.Id)
+                .Where(c => c.IdCoursier == employe.Id 
+                 && c.Status.code == _configuration["Constants:Status:Assigne"])
                 .ToList();
         }
 
         private IList<CourrierDestinataire> listeCourrierSecDir(Employe employe)
         {
             return ListeCourrierBaseQuery()
-                .Where(c => c.IdDestinataire == employe.DepartementId)
+                .Where(c => c.IdDestinataire == employe.DepartementId 
+                && (c.Status.code == _configuration["Constants:Status:LivDirecteur"]
+                || c.Status.code == _configuration["Constants:Status:LivSecretaire"]))
                 .ToList();
         }
 
@@ -106,6 +111,36 @@ namespace gestion_courrier_bo.Services
                 .Include(c => c.Status);
         }
 
+        public void transfererCourrierSecDir(int courrier, int destinataire,string transferer)
+        {
+            CourrierDestinataire courrierDestinataire = findCourrierByKey(courrier,destinataire);
+            if (transferer == _configuration["Constants:Role:SecRole"])
+            {
+                StatusCourrier status = _context.Status.Where(s => s.code == _configuration["Constants:Status:LivSecretaire"]).First();
+                courrierDestinataire.Status = status;
+              
+            }
+            else if (transferer == _configuration["Constants:Role:DirRole"])
+            {
+                StatusCourrier status = _context.Status.Where(s => s.code == _configuration["Constants:Status:LivDirecteur"]).First();
+                courrierDestinataire.Status = status;
+            }
+           
+            courrierDestinataire.DateMaj = DateTime.Now;
+            _context.Attach(courrierDestinataire).State = EntityState.Modified;
+            _context.SaveChanges();
+        }
 
+        public CourrierDestinataire findCourrierByKey(int idCourrier, int idDestinataire)
+        {
+            CourrierDestinataire courrierDestinataire =  _context.CourrierDestinataires
+                .Include(c => c.Destinataire)
+                .Include(c => c.Status)
+                .Include(c => c.Courrier)
+                .Where(c => c.IdCourrier == idCourrier && c.IdDestinataire == idDestinataire)
+                .FirstOrDefault();
+
+            return courrierDestinataire;
+        }
     }
 }

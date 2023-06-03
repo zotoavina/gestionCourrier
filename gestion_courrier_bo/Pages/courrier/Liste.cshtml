@@ -43,9 +43,19 @@
             <th>
                 Status
             </th>
-            <th>
-                Coursier
-            </th>
+            @if (User.IsInRole(ViewData["CouRole"].ToString()))
+            {
+                <th>
+                    Transférer
+                </th>
+            }
+            else
+            {
+                <th>
+                    Coursier
+                </th>
+            }
+           
             <th></th>
         </tr>
     </thead>
@@ -93,17 +103,37 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Status.Label)
                     </td>
+                @if (User.IsInRole(ViewData["CouRole"].ToString()))
+                {
+                        <td>
+                        <a asp-page="Liste" asp-page-handler="Transferer" 
+                        asp-route-courrier="@item.IdCourrier" asp-route-destinataire="@item.IdDestinataire"
+                        asp-route-role="@ViewData["DirRole"]">
+                            <button>Directeur</button>
+                        </a>
+
+                        <a asp-page="Liste" asp-page-handler="Transferer"
+                        asp-route-courrier="@item.IdCourrier" asp-route-destinataire="@item.IdDestinataire"
+                        asp-route-role="@ViewData["SecRole"]">
+                            <button>Secrétaire</button>
+                        </a>
+                        </td>
+                }
+                else
+                {
                     <td>
-                        @if(item.IdCoursier == null)
+                        @if (item.IdCoursier == null)
                         {
                             <a asp-page="Assigner" asp-route-courrier="@item.IdCourrier" asp-route-destinataire="@item.IdDestinataire"><button>Assigner</button></a>
                         }
-                        else{
-
-                        @Html.DisplayFor(modelItem => item.Coursier.Nom)
+                        else
+                        {
+                            @Html.DisplayFor(modelItem => item.Coursier.Nom)
                         }
 
                     </td>
+                }
+                
                   @*  <td>
                         <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
                         <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |

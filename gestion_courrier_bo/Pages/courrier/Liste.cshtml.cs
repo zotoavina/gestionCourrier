@@ -15,23 +15,31 @@ namespace gestion_courrier_bo.Pages.courrier
         private readonly gestion_courrier_bo.Context.AppDbContext _context;
         private readonly ICourrierService _courrierService;
         private readonly IEmployeService _employeService;
+        private readonly IConfiguration _configuration;
         private Employe _currentUser;
         public List<Employe> coursiers { get; set; }
         public IList<CourrierDestinataire> courrierDestinataire { get; set; } = default!;
 
         public ListeModel(gestion_courrier_bo.Context.AppDbContext context, ICourrierService courrierService,
-            IEmployeService employeService)
+            IEmployeService employeService, IConfiguration configuration)
         {
             _context = context;
             _courrierService = courrierService;
             _employeService = employeService;
             coursiers = _employeService.findEmployesByRole("COU");
+            _configuration = configuration;
         }
 
 
 
         public async Task OnGetAsync()
         {
+            string dirRole = _configuration.GetValue<string>("Constants:Role:DirRole");
+            string secRole = _configuration.GetValue<string>("Constants:Role:SecRole");
+            string couRole = _configuration.GetValue<string>("Constants:Role:CouRole");
+            ViewData["DirRole"] = dirRole;
+            ViewData["SecRole"] = secRole;
+            ViewData["CouRole"] = couRole;
             ViewData["Coursiers"] = new SelectList(coursiers, "Id", "Nom");
             
             if (_context.Courriers != null)
@@ -40,6 +48,12 @@ namespace gestion_courrier_bo.Pages.courrier
                 courrierDestinataire = _courrierService.listeCourrier(_currentUser);
                 int a = 0;
             }
+        }
+
+        public async Task<RedirectToPageResult> OnGetTransferer(int courrier, int destinataire,string role)
+        {
+            _courrierService.transfererCourrierSecDir(courrier,destinataire, role);
+            return RedirectToPage("Liste");
         }
     }
 }

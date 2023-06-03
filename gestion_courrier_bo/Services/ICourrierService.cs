@@ -11,5 +11,9 @@ namespace gestion_courrier_bo.Services
         CourrierDestinataire assignerCoursier(int idCoursier, int idCourrierDesti);
 
         IList<CourrierDestinataire> listeCourrier(Employe employe);
+
+        void transfererCourrierSecDir(int courrier, int destinataire, string transferer);
+
+        CourrierDestinataire findCourrierByKey(int idCourrier, int idDestinataire);
     }
 }

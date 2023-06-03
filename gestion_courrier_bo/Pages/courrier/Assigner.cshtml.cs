@@ -18,16 +18,19 @@ namespace gestion_courrier_bo.Pages.courrier
         private readonly IEmployeService _employeService;
 
         private readonly ICourrierService _courrierService;
+        private readonly IConfiguration _configuration;
+
         public List<Employe> coursiers { get; set; }
 
 
         public AssignerModel(gestion_courrier_bo.Context.AppDbContext context, IEmployeService employeService,
-            ICourrierService courrierService)
+            ICourrierService courrierService, IConfiguration configuration)
         {
             _context = context;
             _employeService = employeService;
             _courrierService = courrierService;
-            coursiers = _employeService.findEmployesByRole("COU");
+            _configuration = configuration;
+            coursiers = _employeService.findEmployesByRole(_configuration["Constants:Role:CouRole"]);
         }
         [BindProperty]
         public CourrierDestinataire CourrierDestinataire { get; set; } = default!;
@@ -58,7 +61,7 @@ namespace gestion_courrier_bo.Pages.courrier
             if (CourrierDestinataire.IdCoursier != null)
             {
                 int idCoursier =(int) CourrierDestinataire.IdCoursier;
-                StatusCourrier status = _context.Status.Where(s => s.code == "ECDL").First();
+                StatusCourrier status = _context.Status.Where(s => s.code == _configuration["Constants:Status:Assigne"]).First();
               
                 CourrierDestinataire.Status = status;
                 CourrierDestinataire.DateMaj = DateTime.Now;

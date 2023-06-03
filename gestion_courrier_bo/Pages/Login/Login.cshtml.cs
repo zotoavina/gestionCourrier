@@ -2,14 +2,10 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using BCrypt.Net;
 using Microsoft.EntityFrameworkCore;
 using gestion_courrier_bo.Context;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Model;
-using System.Security.Policy;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
-using gestion_courrier_bo.Models;
 
 namespace gestion_courrier_bo.Pages.Login
 {
@@ -53,7 +49,7 @@ namespace gestion_courrier_bo.Pages.Login
 
             var claims = new List<Claim>{
                 new Claim(ClaimTypes.Name, employee.Email),
-                new Claim(ClaimTypes.Role, employee.Poste.Nom),
+                new Claim(ClaimTypes.Role, employee.Poste.code),
                 // Add other role claims as needed
             };
 
