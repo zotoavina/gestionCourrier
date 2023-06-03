@@ -37,9 +37,11 @@ namespace gestion_courrier_bo.Pages.courrier
             string dirRole = _configuration.GetValue<string>("Constants:Role:DirRole");
             string secRole = _configuration.GetValue<string>("Constants:Role:SecRole");
             string couRole = _configuration.GetValue<string>("Constants:Role:CouRole");
+            string recRole = _configuration.GetValue<string>("Constants:Role:RecRole");
             ViewData["DirRole"] = dirRole;
             ViewData["SecRole"] = secRole;
             ViewData["CouRole"] = couRole;
+            ViewData["RecRole"] = recRole;
             ViewData["Coursiers"] = new SelectList(coursiers, "Id", "Nom");
             
             if (_context.Courriers != null)

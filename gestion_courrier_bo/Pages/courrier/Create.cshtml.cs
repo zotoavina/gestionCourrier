@@ -9,9 +9,11 @@ using gestion_courrier_bo.Context;
 using gestion_courrier_bo.Models;
 using gestion_courrier_bo.Services;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace gestion_courrier_bo.Pages.courrier
 {
+    [Authorize(Roles = "REC")]
     public class CreateModel : PageModel
     {
         private readonly gestion_courrier_bo.Context.AppDbContext _context;
@@ -67,7 +69,7 @@ namespace gestion_courrier_bo.Pages.courrier
             _courrierService.createCourrier(Courrier, connectedUser, SelectedDepartements, FileUpload);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("/Liste");
         }
     }
 }

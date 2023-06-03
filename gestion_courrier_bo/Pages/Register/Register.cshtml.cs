@@ -47,7 +47,7 @@ namespace gestion_courrier_bo.Pages.Register
             _context.Employes.Add(Employe);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./../Login/Login");
+            return RedirectToPage("/Login/Login");
         }
 
         private string HashPassword(string password)

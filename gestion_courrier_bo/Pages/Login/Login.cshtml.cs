@@ -58,15 +58,13 @@ namespace gestion_courrier_bo.Pages.Login
             await HttpContext.SignInAsync(IdentityConstants.ApplicationScheme, new ClaimsPrincipal(claimsIdentity));
 
             // Redirect to a protected page or perform any other desired action
-            return RedirectToPage("/Index");
+            return RedirectToPage("/courrier/Liste");
         }
 
         private bool VerifyPassword(string password, string passwordHash)
         {
-           return BCrypt.Net.BCrypt.Verify(password,passwordHash);
+            return BCrypt.Net.BCrypt.Verify(password, passwordHash);
         }
-
-        
     }
 
-    }
+}

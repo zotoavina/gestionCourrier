@@ -1,7 +1,9 @@
 ﻿@page
 @model gestion_courrier_bo.Pages.Login.LoginModel
 @{
+    Layout = null;
 }
+
 
 <h2>Login</h2>
 
@@ -15,4 +17,5 @@
         <input type="password" id="password" name="Password" required />
     </div>
     <button type="submit">Login</button>
+    <a asp-page="/Register/Register">Je n'ai pas de compte</a>
 </form>

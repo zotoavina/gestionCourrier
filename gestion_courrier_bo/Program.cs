@@ -54,7 +54,25 @@ app.UseAuthentication();
 
 app.UseAuthorization();
 
+app.Use(async (context, next) =>
+{
+    await next();
 
+    if (context.Response.StatusCode == 403 || context.Response.StatusCode == 404)
+    {
+        context.Response.Redirect("/Error");
+    }
+});
 app.MapRazorPages();
 
+app.MapGet("/", () =>
+{
+    var defaultPagePath = "/Login/Login"; // Replace "YourPageName" with the desired page name
+    return Results.Redirect(defaultPagePath);
+});
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapRazorPages();
+});
 app.Run();
