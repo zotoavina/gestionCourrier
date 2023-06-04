@@ -9,7 +9,7 @@
  @if (User.IsInRole(ViewData["RecRole"].ToString()))
 {
     <p>
-        <a asp-page="Create">Create New</a>
+        <a asp-page="Create" class="create-button">Create New</a>
     </p>
 }
 
@@ -59,7 +59,6 @@
                 </th>
             }
            
-            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -76,10 +75,14 @@
                     @Html.DisplayFor(modelItem => item.Courrier.Commentaire)
                     </td>
                     <td>
-                    @Html.DisplayFor(modelItem => item.Courrier.Fichier)
+                    @{
+                        var fileName = System.IO.Path.GetFileName(item.Courrier.Fichier);
+                    }
+                    @fileName
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Courrier.DateReception)
+                    @item.Courrier.DateReception.ToString("dd MMM yyyy HH:mm")
+
                     </td>
                     @if(item.Courrier.ExpediteurInterne != null)
                     {
@@ -111,23 +114,26 @@
                         <td>
                         <a asp-page="Liste" asp-page-handler="Transferer" 
                         asp-route-courrier="@item.IdCourrier" asp-route-destinataire="@item.IdDestinataire"
-                        asp-route-role="@ViewData["DirRole"]">
-                            <button>Directeur</button>
+                   asp-route-role="@ViewData["DirRole"]" class="transfer-button">
+                            Directeur
                         </a>
 
                         <a asp-page="Liste" asp-page-handler="Transferer"
                         asp-route-courrier="@item.IdCourrier" asp-route-destinataire="@item.IdDestinataire"
-                        asp-route-role="@ViewData["SecRole"]">
-                            <button>Secrétaire</button>
+                   asp-route-role="@ViewData["SecRole"]" class="transfer-button">
+                            Secrétaire
                         </a>
                         </td>
                 }
                 else
                 {
-                    <td>
+                    <td class="coursier-name">
                         @if (item.IdCoursier == null)
                         {
-                            <a asp-page="Assigner" asp-route-courrier="@item.IdCourrier" asp-route-destinataire="@item.IdDestinataire"><button>Assigner</button></a>
+                            <a asp-page="Assigner" asp-route-courrier="@item.IdCourrier" 
+                            asp-route-destinataire="@item.IdDestinataire" class="assign-button">
+                                Assigner
+                            </a>
                         }
                         else
                         {

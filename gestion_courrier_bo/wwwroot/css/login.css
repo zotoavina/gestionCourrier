@@ -61,19 +61,6 @@ a:hover {
     text-decoration: underline;
 }
 
-.footer {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    text-align: center;
-    padding: 10px;
-    background-color: #f8f9fa;
-}
-
-.footer-container {
-    max-width: 400px;
-    margin: 0 auto;
-}
 
 .login-form,
 .register-form {

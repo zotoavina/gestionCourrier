@@ -1,0 +1,106 @@
+﻿/* CSS pour la page de liste */
+
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #1b6ec2;
+}
+
+p {
+    text-align: right;
+    margin-bottom: 20px;
+}
+
+a {
+    color: #1b6ec2;
+    text-decoration: none;
+}
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+.table-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    border: 1px solid #ccc;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+}
+
+    th:last-child, td:last-child {
+        border-right: none;
+    }
+
+th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+tbody tr:hover {
+    background-color: #f2f2f2;
+}
+
+.button-container {
+    text-align: right;
+    margin-top: 20px;
+}
+
+.create-button {
+    background-color: #1b6ec2;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+    .create-button:hover {
+        background-color: #1861ac;
+    }
+
+.transfer-button {
+    background-color: #1b6ec2;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+    .transfer-button:hover {
+        background-color: #1861ac;
+    }
+
+.assign-button {
+    background-color: #1b6ec2;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+    .assign-button:hover {
+        background-color: #1861ac;
+    }
+
+.coursier-name {
+    font-weight: bold;
+    color: #1b6ec2;
+}

@@ -4,60 +4,73 @@
 @{
     ViewData["Title"] = "Create";
 }
+@section Styles {
+    <link rel="stylesheet" href="~/css/create.css" />
+}
 
-<h1>Create</h1>
+<div class="create-container">
+    <h1 class="create-title">Create</h1>
 
-<h4>Courrier</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Courrier.Objet" class="control-label"></label>
-                <input asp-for="Courrier.Objet" class="form-control" />
-                <span asp-validation-for="Courrier.Objet" class="text-danger"></span>
+    <form class="create-form" method="post" enctype="multipart/form-data">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-container">
+                <div class="form-group">
+                    <label asp-for="Courrier.Objet" class="control-label"></label>
+                    <input asp-for="Courrier.Objet" class="form-control" />
+                    <span asp-validation-for="Courrier.Objet" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Courrier.Reference" class="control-label"></label>
+                    <input asp-for="Courrier.Reference" class="form-control" />
+                    <span asp-validation-for="Courrier.Reference" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Courrier.Commentaire" class="control-label"></label>
+                    <input asp-for="Courrier.Commentaire" class="form-control" />
+                    <span asp-validation-for="Courrier.Commentaire" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Courrier.IdExpediteur" class="control-label">Expéditeur interne</label>
+                    <select asp-for="Courrier.IdExpediteur" class="form-control" asp-items="ViewBag.IdExpediteur"></select>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label">Déstinataires</label>
+                    <select multiple name="SelectedDestinataires" class="form-control" asp-items="ViewBag.Destinataires"></select>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Courrier.Reference" class="control-label"></label>
-                <input asp-for="Courrier.Reference" class="form-control" />
-                <span asp-validation-for="Courrier.Reference" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Courrier.Commentaire" class="control-label"></label>
-                <input asp-for="Courrier.Commentaire" class="form-control" />
-                <span asp-validation-for="Courrier.Commentaire" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Courrier.IdExpediteur" class="control-label">Expéditeur interne</label>
-                <select asp-for="Courrier.IdExpediteur" class ="form-control" asp-items="ViewBag.IdExpediteur"></select>
+            <div class="form-container">
+                <div class="form-group">
+                    <label asp-for="Courrier.ExpediteurExterne" class="control-label">Expéditeur externe</label>
+                    <input asp-for="Courrier.ExpediteurExterne" class="form-control" />
+                    <span asp-validation-for="Courrier.ExpediteurExterne" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Courrier.IdFlag" class="control-label">Flag</label>
+                    <select asp-for="Courrier.IdFlag" class="form-control" asp-items="ViewBag.IdFlag"></select>
+                </div>
+            <div class="custom-file">
+                <input type="file" name="FileUpload" id="fileUpload" class="custom-file-input" />
+                <label for="fileUpload" class="custom-file-label">Choisir un fichier</label>
             </div>
 
-            <div class="form-group">
-                <label class="control-label">Déstinataires</label>
-                <select multiple name="SelectedDestinataires" class="form-control" asp-items="ViewBag.Destinataires"></select>
-            </div>            
-            <div class="form-group">
-                <label asp-for="Courrier.ExpediteurExterne" class="control-label">Expéditeur externe</label>
-                <input asp-for="Courrier.ExpediteurExterne" class="form-control" />
-                <span asp-validation-for="Courrier.ExpediteurExterne" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Courrier.IdFlag" class="control-label">Flag</label>
-                <select asp-for="Courrier.IdFlag" class ="form-control" asp-items="ViewBag.IdFlag"></select>
-            </div>
-            <input type="file" name="FileUpload" />
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
             </div>
         </form>
-    </div>
-</div>
-
-<div>
-    <a asp-page="/Liste">Liste des courriers</a>
+        <a class="back-link" asp-page="/Liste">Liste des courriers</a>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        document.getElementById("fileUpload").addEventListener("change", function () {
+            var fileName = this.files[0].name;
+            document.querySelector(".custom-file-label").innerHTML = fileName;
+        });
+    </script>
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

@@ -16,3 +16,33 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.navbar-nav {
+    margin-left: auto;
+}
+
+.nav-link.text-dark {
+    margin-right: 10px;
+    color: #000;
+    text-decoration: none;
+}
+
+.nav-link.text-dark:hover {
+    color: #333;
+    text-decoration: underline;
+}
+
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    background-color: #f8f9fa;
+}
+
+.footer-container {
+    max-width: 400px;
+    margin: 0 auto;
+}

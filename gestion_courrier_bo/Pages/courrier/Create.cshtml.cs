@@ -69,7 +69,7 @@ namespace gestion_courrier_bo.Pages.courrier
             _courrierService.createCourrier(Courrier, connectedUser, SelectedDepartements, FileUpload);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("/Liste");
+            return RedirectToPage("/courrier/Liste");
         }
     }
 }
